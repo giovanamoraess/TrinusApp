@@ -5,22 +5,22 @@ import {
   Image,
   StyleSheet
 } from 'react-native';
-
-
+var moment = require('moment');
 
 export default class Itens extends Component {
   render() {
-      console.log('propss', this.props)
+	  console.log('propss', this.props)
+	  moment.locale();
     return (
      <View style={styles.item}> 
      	<View style={styles.foto}>
 	     	<Image style={{height: 100, width: 100}} source={{uri: this.props.item.pictures[0].url}} />
 	    </View>
 	    <View style={styles.detalhesItens}> 
-	     	<Text style={styles.textoTitulo}> {this.props.item.title} </Text>
-	     	<Text style={styles.textoDetalhes}> Descrição: {this.props.item.description} </Text>
-	     	<Text style={styles.textoValor}> Capacidade: {this.props.item.capacity} </Text>
-	     	<Text style={styles.textoDetalhes}> Data: {this.props.item.departure_date} </Text>
+	     	<Text style={{fontWeight: '500'}}> {this.props.item.title} </Text>
+	     	<Text> Descrição: {this.props.item.description} </Text>
+	     	<Text> Capacidade: {this.props.item.capacity} </Text>
+	     	<Text> Data: {moment(this.props.item.departure_date).format('L')} </Text>
 	    </View>
      </View>
     );
