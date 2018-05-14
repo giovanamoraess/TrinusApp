@@ -1,0 +1,2 @@
+# TrinusApp
+Aplicativo react native
