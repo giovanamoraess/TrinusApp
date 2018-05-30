@@ -7,18 +7,26 @@ import {
 } from 'react-native';
 var moment = require('moment');
 
+import ReadMore from 'react-native-read-more-text';
+
 export default class Itens extends Component {
-  render() {
+
+
+	
+	render() {
 	  console.log('propss', this.props)
 	  moment.locale();
     return (
      <View style={styles.item}> 
      	<View style={styles.foto}>
-	     	<Image style={{height: 100, width: 100}} source={{uri: this.props.item.pictures[0].url}} />
+		 {this.props.item.pictures.lenght > 0 ? <Image style={{height: 100, width: 100}} source={{uri: this.props.item.pictures[0].url}} /> : null }
 	    </View>
 	    <View style={styles.detalhesItens}> 
 	     	<Text style={{fontWeight: '500'}}> {this.props.item.title} </Text>
-	     	<Text> Descrição: {this.props.item.description} </Text>
+	     	<ReadMore
+			 numberOfLines={3}>
+				<Text> Descrição: {this.props.item.description} </Text>
+			</ReadMore>
 	     	<Text> Capacidade: {this.props.item.capacity} </Text>
 	     	<Text> Data: {moment(this.props.item.departure_date).format('L')} </Text>
 	    </View>
