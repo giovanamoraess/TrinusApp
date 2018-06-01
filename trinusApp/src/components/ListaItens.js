@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  ScrollView
+  ScrollView,
+  StyleSheet
 } from 'react-native';
 
 import axios from 'axios';
@@ -18,11 +19,12 @@ export default class ListaItens extends Component {
         listaItens: [],
         latitude: null,
         longitude: null,
-        error: null,
+        error: null
     };
   }
 
   componentDidMount() {
+    //Busca localização da pessoa
     const { latitude, longitude } = this.state;
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -31,8 +33,8 @@ export default class ListaItens extends Component {
           longitude: position.coords.longitude,
           error: null,
         });
-
-        //axios.get('http://excursoes.herokuapp.com/api/excursion/search?term=""&lat='+latitude+'&lng='+longitude+'&range_km=20')  
+        
+        //Ao encontrar as cordenadas da localização, faz chamada a API de excursões
         axios.get('http://excursoes.herokuapp.com/api/excursion/search', {
           params: {
             term: "''",
@@ -54,32 +56,35 @@ export default class ListaItens extends Component {
     );
   }
 
-  componentWillMount() {
-    const {latitude, longitude} = this.state; 
-    // axios.get('http://excursoes.herokuapp.com/api/excursion/search?term=""&lat='+latitude+'&lng='+longitude+'&range_km=20')  
-    // // axios.get('http://excursoes.herokuapp.com/api/excursion/search', {
-    // //   params: {
-    // //     term: "",
-    // //     lat: latitude,
-    // //     lng: longitude,
-    // //     range_km: 20
-    // //   }
-    // // })
-    //   .then((response) => { 
-    //     console.log('responseeee', response)
-    //     this.setState({ listaItens: response.data}); })
-    //   .catch(function (error) {
-    //      console.log(error);
-    //   })  
-  }   
-
   render() {
+    const { listaItens } = this.state;
+
+    if (listaItens.length < 1) {
+      return (
+        <View>
+          <Text> Carregando... </Text>
+        </View>
+      )
+    }
+
     return (
-     <ScrollView style={{backgroundColor: '#ddd'}}> 
-        <Text>Latitude: {this.state.latitude}</Text>
-        <Text>Longitude: {this.state.longitude}</Text>
+     <ScrollView style={{backgroundColor: '#f3f3f3'}}> 
+        <Text style={styles.textHeader}> Excursões próximas á você </Text>
        {this.state.listaItens.map(item => (<Itens key={item.id} item={item} /> ))}
      </ScrollView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  textHeader: {
+    fontSize: 20,
+    color: '#F9BF3B',
+    textAlign: 'center',
+    fontWeight: '500',
+    marginTop: 20,
+    marginBottom: 10
+  }
+
+
+});

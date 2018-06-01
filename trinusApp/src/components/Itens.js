@@ -24,14 +24,15 @@ export default class Itens extends Component {
 	    <View style={styles.detalhesItens}> 
 	     	<Text style={{fontWeight: '500'}}> {this.props.item.title} </Text>
 	     	<ReadMore
-			 numberOfLines={3}>
-				<Text> Descrição: {this.props.item.description} </Text>
+			 numberOfLines={2}
+			 style={styles.descricao}>
+				<Text>{this.props.item.description}</Text>
 			</ReadMore>
 	     	<Text> Capacidade: {this.props.item.capacity} </Text>
 	     	<Text> Data: {moment(this.props.item.departure_date).format('L')} </Text>
 	    </View>
      </View>
-    );
+    )
   }
 }
 
@@ -39,10 +40,15 @@ const styles = StyleSheet.create({
 	item: {
 		backgroundColor: '#fff',
 		borderWidth: 0.5,
-		borderColor: '#999',
-		margin: 10, 
+		borderColor: '#f3f3f3',
+		borderRadius: 10,
+		marginHorizontal: 10, 
+		marginVertical: 5,
 		padding: 10,
-		flexDirection: 'row'
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 150
 	},
 	foto: {
 		width: 102,
@@ -63,6 +69,9 @@ const styles = StyleSheet.create({
 	},
 	textoDetalhes: {
 		fontSize: 14
+	},
+	descricao: {
+		height: 40
 	}
 
 
